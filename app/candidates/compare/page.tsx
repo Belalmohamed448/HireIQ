@@ -1,9 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
+
+
 
 type CompareCandidate = {
     id: string;
@@ -17,7 +19,7 @@ type CompareCandidate = {
     missingSkills: string[];
 };
 
-export default function ComparePage() {
+function ComparePageContent() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const ids = (searchParams.get("ids") ?? "").split(",").filter(Boolean);
@@ -218,4 +220,11 @@ export default function ComparePage() {
             </div>
         </div>
     );
+}
+export default function ComparePage() {
+  return (
+    <Suspense fallback={<LoadingSpinner text="Loading comparison..." />}>
+      <ComparePageContent />
+    </Suspense>
+  );
 }
