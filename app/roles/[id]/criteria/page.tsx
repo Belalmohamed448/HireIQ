@@ -192,8 +192,8 @@ const { showToast } = useToast();
 
     return (
         <div className="max-w-2xl mx-auto p-8">
-            <h1 className="text-2xl font-semibold mb-1 text-red-600">
-  TEST DEPLOYMENT
+           <h1 className="text-2xl font-semibold mb-1">
+  Evaluation Criteria
 </h1>
             <p className="text-gray-500 mb-6">
                 Define what matters for this role. Candidates will be scored against this.
