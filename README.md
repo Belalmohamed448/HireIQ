@@ -112,9 +112,7 @@ npm run dev
 
 Visit `http://localhost:3000`.
 
-## Demo video
 
-> _Paste your GitHub-hosted video embed link here once uploaded._
 
 ## Screenshots
 
