@@ -110,9 +110,23 @@ const { showToast } = useToast();
         }
     }
 
-    function removeSkill(type: "required" | "preferred", skill: string) {
+   function removeSkill(type: "required" | "preferred", skill: string) {
         if (type === "required") setRequiredSkills(requiredSkills.filter((s) => s !== skill));
         else setPreferredSkills(preferredSkills.filter((s) => s !== skill));
+    }
+
+    function moveSkill(skill: string, from: "required" | "preferred", to: "required" | "preferred") {
+        if (from === "required") {
+            setRequiredSkills(requiredSkills.filter((s) => s !== skill));
+        } else {
+            setPreferredSkills(preferredSkills.filter((s) => s !== skill));
+        }
+
+        if (to === "required") {
+            if (!requiredSkills.includes(skill)) setRequiredSkills((prev) => [...prev, skill]);
+        } else {
+            if (!preferredSkills.includes(skill)) setPreferredSkills((prev) => [...prev, skill]);
+        }
     }
 
     function addCustomCriterion() {
@@ -211,13 +225,20 @@ const { showToast } = useToast();
             {/* Required Skills */}
             <section className="mb-6">
                 <label className="block font-medium mb-2">Required Skills</label>
-                <div className="flex flex-wrap gap-2 mb-2">
+              <div className="flex flex-wrap gap-2 mb-2">
                     {requiredSkills.map((skill) => (
                         <span
                             key={skill}
                             className="bg-red-50 text-red-700 border border-red-200 rounded-full px-3 py-1 text-sm flex items-center gap-1"
                         >
                             {skill}
+                            <button
+                                onClick={() => moveSkill(skill, "required", "preferred")}
+                                className="text-red-400 hover:text-red-700 text-xs ml-1"
+                                title="Move to Preferred"
+                            >
+                                ↓
+                            </button>
                             <button onClick={() => removeSkill("required", skill)} className="text-red-400 hover:text-red-700">
                                 ×
                             </button>
@@ -236,13 +257,20 @@ const { showToast } = useToast();
             {/* Preferred Skills */}
             <section className="mb-6">
                 <label className="block font-medium mb-2">Preferred Skills</label>
-                <div className="flex flex-wrap gap-2 mb-2">
+               <div className="flex flex-wrap gap-2 mb-2">
                     {preferredSkills.map((skill) => (
                         <span
                             key={skill}
                             className="bg-blue-50 text-blue-700 border border-blue-200 rounded-full px-3 py-1 text-sm flex items-center gap-1"
                         >
                             {skill}
+                            <button
+                                onClick={() => moveSkill(skill, "preferred", "required")}
+                                className="text-blue-400 hover:text-blue-700 text-xs ml-1"
+                                title="Move to Required"
+                            >
+                                ↑
+                            </button>
                             <button onClick={() => removeSkill("preferred", skill)} className="text-blue-400 hover:text-blue-700">
                                 ×
                             </button>
